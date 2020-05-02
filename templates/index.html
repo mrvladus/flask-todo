@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<title>To Do</title>
+</head>
+<body style="background: linear-gradient(to left, #f12711, #f5af19);">
+	<!-- -------------------- container --------------------- -->
+	<div class="container-xl w-50 shadow rounded-sm p-5" style="transform: translateY(20%); background: #f5f6fa;">
+		<!-- --------------------- enter form --------------------- -->
+		<h1 class="d-flex pb-3 justify-content-center">TO DO LIST</h1>
+			<form class="d-flex py-3" action="/add" method="POST">
+				<input type="text" class="form-control" name="new-todo" placeholder="Add new To Do">
+				<input type="submit" class="btn btn-primary ml-2" value="ADD">
+			</form>
+		<!-- --------------------- list --------------------- -->
+		<ul class="list-group">
+			{% for todo in todos %}
+				<div class="d-flex">
+					<!-- --------------------- toggle form --------------------- -->
+					<form class="d-flex py-2 flex-fill" action="/complete/{{ todo.id }}" method="POST">
+						{% if todo.complete == True %}
+							<li class="list-group-item flex-fill list-group-item-success">{{ todo.text }}</li>
+							<button type="submit" class="btn btn-success ml-2 btn-sm">Cancel</button>
+						{% else %}
+							<li class="list-group-item flex-fill">{{ todo.text }}</li>
+							<button type="submit" class="btn btn-success ml-2 btn-sm">Done</button>
+						{% endif %}		
+					</form>
+					<!-- --------------------- delete form --------------------- -->
+					<form class="d-flex py-2" action="/delete/{{ todo.id }}" method="POST">
+						<button class="btn btn-danger ml-2 btn-sm" type="submit">Delete</button>
+					</form>
+				</div>
+			{% endfor %}
+			<!-- --------------------- clear form --------------------- -->
+			{% if todos %}
+				<form action="/clear" method="POST">
+					<button type="submit" class="btn btn-warning btn-block mt-2">Clear all</button>
+				</form>
+			{% endif %}
+		</ul>
+		<div style="transform: translateY(100px);" class="container d-flex justify-content-center align-items-center position-relative">Krupinskiy Vlad 2020</div>
+	</div>
+</body>
+</html>
